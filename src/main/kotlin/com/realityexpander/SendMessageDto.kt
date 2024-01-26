@@ -5,12 +5,13 @@ import com.google.firebase.messaging.Notification
 
 data class SendMessageDto(
     val to: String?,
-    val notification: NotificationBody
+    val notification: NotificationBody,
+
 )
 
 data class NotificationBody(
     val title: String,
-    val body: String
+    val body: String,
 )
 
 fun SendMessageDto.toMessage(): Message {
@@ -22,10 +23,11 @@ fun SendMessageDto.toMessage(): Message {
                 .build()
         )
         .apply {
+
             if(to == null) {
-                setTopic("chat")
+                setTopic("chat") // send to all devices subscribed to topic "chat"
             } else {
-                setToken(to)
+                setToken(to)  // send to a single device
             }
         }
         .build()
